@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "1QtskkTsCXi+wADetxY5zbPWbHh7NbqCc2tAyJ91lyk=",
+  "Source": "MailSenderius",
+  "BasePath": "_content/MailSenderius",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

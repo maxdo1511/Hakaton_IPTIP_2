@@ -1,0 +1,367 @@
+syntax = "proto3";
+
+package database;
+
+service DatabaseCore {
+  rpc GetAllUsers(GetAllUsersRequest) returns (GetAllUsersResponse);
+  rpc GetCurator(GetCuratorRequest) returns (GetCuratorResponse);
+  rpc GetCuratorsByRole(GetCuratorsByRoleRequest) returns (GetCuratorsByRoleResponse);
+  rpc GetSortedCurators(GetSortedCuratorsRequest) returns (GetSortedCuratorsResponse);
+  rpc AddCurator(AddCuratorRequest) returns (AddCuratorResponse);
+  rpc AddMireaToken(AddMireaTokenRequest) returns (AddMireaTokenResponse);
+  rpc GetMireaToken(GetMireaTokenRequest) returns (GetMireaTokenResponse);
+  rpc SetContact(SetContactRequest) returns (SetContactResponse);
+  rpc CreateCuratorPair(CreateCuratorPairRequest) returns (CreateCuratorPairResponse);
+  rpc SetCuratorRating(SetCuratorRatingRequest) returns (SetCuratorRatingResponse);
+  rpc AddMaterial(AddMaterialRequest) returns (AddMaterialResponse);
+  rpc GetMaterials(GetMaterialsRequest) returns (GetMaterialsResponse);
+  rpc AddMaterialComment(AddMaterialCommentRequest) returns (AddMaterialCommentResponse);
+  rpc SetMaterial(SetMaterialRequest) returns (SetMaterialResponse);
+  rpc GetEvents(GetEventsRequest) returns (GetEventsResponse);
+  rpc AddEventComment(AddEventCommentRequest) returns (AddEventCommentResponse);
+  rpc AddEvent(AddEventRequest) returns (AddEventResponse);
+  rpc SetEvent(SetEventRequest) returns (SetEventResponse);
+  rpc GetAllGroupDocuments(GetAllGroupDocumentsRequest) returns (GetAllGroupDocumentsResponse);
+  rpc AddGroupDocument(AddGroupDocumentRequest) returns (AddGroupDocumentResponse);
+  rpc SetDocument(SetGroupDocumentRequest) returns (SetGroupDocumentResponse);
+  rpc GetCuratorGraphic(GetCuratorGraphicRequest) returns (GetCuratorGraphicResponse);
+}
+
+/**
+
+ОСНОВОНОЕ
+
+ */
+
+//Все пользователи (основные данные)
+message GetAllUsersRequest{}
+message GetAllUsersResponse{
+  repeated User users = 1;
+}
+message User {
+  string email = 1;
+  string role = 2;
+  string token = 3;
+}
+
+/**
+
+КУРАТОРЫ
+
+ */
+
+//Куратор (расширенные данные)
+message GetCuratorRequest{
+  string email = 1;
+}
+message GetCuratorResponse{
+  Curator curator = 1;
+}
+message Curator{
+  repeated string groups = 1;
+  Ratings ratings = 2;
+  Contacts contacts = 3;
+}
+message Ratings{
+  double education = 1;
+  double social = 2;
+  double documents = 3;
+  double factor = 4;
+}
+message Contacts{
+  string phone = 1;
+  string tg = 2;
+  string email = 3;
+  string reserve = 4;
+}
+
+//Все кураторы по роли
+message GetCuratorsByRoleRequest{
+  string role = 1;
+}
+message GetCuratorsByRoleResponse{
+  repeated Curator curators = 1;
+}
+
+//отсортированные кураторы
+message GetSortedCuratorsRequest{
+  string sortBy = 1;
+}
+message GetSortedCuratorsResponse{
+  repeated Curator curators = 1;
+}
+
+//Получение всех с этим куратором других кураторов
+message GetAllSlavesRequest{
+  string email = 1;
+}
+message GetAllSlavesResponse{
+  repeated string emails = 1; //если студент, то List будет из одного элемента
+}
+
+//Добавление куратора
+message AddCuratorRequest{
+  string email = 1;
+  string role = 2;
+}
+message AddCuratorResponse{
+  bool result = 1;
+  string error = 2;
+}
+
+//Изменение поля в контактах
+message SetContactRequest{
+  string field = 1;
+  string value = 2;
+  string editor_email = 3;
+  string recipient_email = 4;
+}
+message SetContactResponse{
+  bool result = 1;
+  string message = 2;
+}
+
+//Создание группы куратор учитель + студент
+message CreateCuratorPairRequest{
+  string teacher_email = 1;
+  string student_email = 2;
+  string group = 3;
+}
+message CreateCuratorPairResponse{
+  bool result = 1;
+  string message = 2;
+}
+
+//Изменение рейтинга куратора
+message SetCuratorRatingRequest{
+  string field = 1;
+  double value = 2;
+  string editor_email = 3;
+  string recipient_email = 4;
+}
+message SetCuratorRatingResponse{
+  bool result = 1;
+  string message = 2;
+}
+
+/**
+
+МАТЕРИАЛЫ
+
+ */
+
+//Добавление материала
+message AddMaterialRequest{
+  string editor_email = 1;
+  string links = 2;
+  string title = 3;
+}
+message AddMaterialResponse{
+  bool result = 1;
+  string message = 2;
+}
+
+//Получение всех материалов
+message GetMaterialsRequest{}
+message GetMaterialsResponse{
+  repeated Material material = 1;
+}
+
+message Material{
+  int64 id = 1;
+  double ratings = 2;
+  double factor = 3;
+  string links = 4;
+  int32 views = 5;
+  int64 date = 6;
+  string title = 7;
+  repeated MaterialComment material_comments = 8;
+}
+message MaterialComment{
+  string commentator_email = 1;
+  string comment = 2;
+  int64 date = 3;
+}
+
+//Добавление комментария для материала
+message AddMaterialCommentRequest{
+  string commentator_email = 1;
+  string comment = 2;
+}
+message AddMaterialCommentResponse{
+  bool result = 1;
+  string message = 2;
+  int64 date = 3;
+}
+
+//Изменение материала
+message SetMaterialRequest{
+  string field = 1;
+  double value = 2;
+  string editor_email = 3;
+  string recipient_email = 4;
+  int64 material_id = 5;
+}
+message SetMaterialResponse{
+  bool result = 1;
+  string message = 2;
+}
+
+/**
+
+СОБЫТИЯ
+
+ */
+
+//Получение событий (можно отсортировать)
+message GetEventsRequest{
+  string sort = 1;
+  int32 amount = 2; //сколько нужно всего
+}
+message GetEventsResponse{
+  repeated Event events = 1;
+}
+
+message Event{
+  int64 id = 1;
+  string title = 2;
+  string description = 3;
+  repeated string link = 4;
+  int32 views = 5;
+  int64 next_date = 6;
+  int64 last_date = 7; // -1, если событие ранее не проводилось
+  repeated string tags = 8;
+  double rating = 9;
+  double dynamic = 10;
+  repeated EventComment comments = 11;
+}
+message EventComment{
+  string commentator_email = 1;
+  string comment = 2;
+  int64 date = 3;
+}
+
+//Добавление коммантерия к событию
+message AddEventCommentRequest{
+  string commentator_email = 1;
+  string comment = 2;
+}
+message AddEventCommentResponse{
+  bool result = 1;
+  string message = 2;
+  int64 date = 3;
+}
+
+//Изменение события
+message SetEventRequest{
+  string field = 1;
+  double value = 2;
+  string editor_email = 3;
+  string recipient_email = 4;
+  int64 event_id = 5;
+}
+message SetEventResponse{
+  bool result = 1;
+  string message = 2;
+}
+
+//Добавление события
+message AddEventRequest{
+  string title = 1;
+  string description = 2;
+  repeated string link = 3;
+  int64 next_date = 4;
+  int64 last_date = 5;
+  repeated string tags = 6;
+}
+message AddEventResponse{
+  bool result = 1;
+  string message = 2;
+}
+
+/**
+
+ГРУППЫ
+
+ */
+
+//Получения всех документов группы
+message GetAllGroupDocumentsRequest{
+  string param = 1; // можно дать как группу, так и email куратора (если у куратора много групп, будет ошибка)
+}
+message GetAllGroupDocumentsResponse{
+  repeated Document documents = 1;
+}
+
+message Document{
+  int64 id = 1;
+  string group = 2;
+  string title = 3;
+  string description = 4;
+  string last_update = 5;
+  string status = 6;
+}
+
+//Изменение документа (поля last_update и group изменить не выйдет)
+message SetGroupDocumentRequest{
+  string field = 1;
+  double value = 2;
+  string editor_email = 3;
+  string recipient_email = 4;
+  string document_id = 5;
+}
+message SetGroupDocumentResponse{
+  bool result = 1;
+  string message = 2;
+}
+
+//Добавление документа
+message AddGroupDocumentRequest{
+  string group = 1;
+  string title = 2;
+  string description = 3;
+  string status = 4;
+}
+message AddGroupDocumentResponse{
+  bool result = 1;
+  string message = 2;
+}
+
+/**
+
+ТОКЕНЫ
+
+ */
+
+//Выдача токена
+message AddMireaTokenRequest{
+  string token = 1;
+  string email = 2;
+}
+message AddMireaTokenResponse{
+  bool result = 1;
+  string error = 2;
+}
+
+//Получение токена
+message GetMireaTokenRequest{
+  string email = 1;
+}
+message GetMireaTokenResponse{
+  bool result = 1;
+  string error = 2;
+  string token = 3;
+}
+
+/**
+
+КАРТИНКИ
+
+ */
+
+message GetCuratorGraphicRequest{
+  string email = 1;
+}
+message GetCuratorGraphicResponse{
+  repeated bytes bytes = 1;
+}

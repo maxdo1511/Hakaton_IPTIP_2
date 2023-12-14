@@ -1,0 +1,19 @@
+.profile__icon__container {
+    width: 152px;
+    height: 152px;
+    position: relative;
+    gap: 10px;
+}
+
+.profile__icon:hover {
+    border-color: rgba(138,138,138,0.78);
+    border-width: 5px;
+}
+
+.profile__icon__loader {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    opacity: 0;
+    cursor: pointer;
+}

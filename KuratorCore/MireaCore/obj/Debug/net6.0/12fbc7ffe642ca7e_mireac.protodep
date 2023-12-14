@@ -1,0 +1,2 @@
+obj\Debug\net6.0\Protos/Mireac.cs \
+obj\Debug\net6.0\Protos/MireacGrpc.cs: Protos/mireac.proto

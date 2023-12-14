@@ -1,0 +1,97 @@
+syntax = "proto3";
+
+option csharp_namespace = "LogicCore.Communicators";
+
+package database;
+
+service DatabaseCore {
+  rpc GetAllUsers(GetAllUsersRequest) returns (GetAllUsersResponse);
+  rpc GetCurator(GetCuratorRequest) returns (GetCuratorResponse);
+  rpc GetCuratorsByRole(GetCuratorsByRoleRequest) returns (GetCuratorsByRoleResponse);
+  rpc GetSortedCurators(GetSortedCuratorsRequest) returns (GetSortedCuratorsResponse);
+  rpc AddCurator(AddCuratorRequest) returns (AddCuratorResponse);
+  rpc AddMireaToken(AddMireaTokenRequest) returns (AddMireaTokenResponse);
+  rpc GetMireaToken(GetMireaTokenRequest) returns (GetMireaTokenResponse);
+}
+
+//Все пользователи (основные данные)
+message GetAllUsersRequest{}
+message GetAllUsersResponse{
+  repeated User users = 1;
+}
+message User {
+  string email = 1;
+  string role = 2;
+  string token = 3;
+}
+
+//Куратор (расширенные данные)
+message GetCuratorRequest{
+  string email = 1;
+}
+message GetCuratorResponse{
+  Curator curator = 1;
+}
+message Curator{
+  string group = 1;
+  Ratings ratings = 2;
+  Contacts contacts = 3;
+}
+message Ratings{
+  double education = 1;
+  double social = 2;
+  double documents = 3;
+  double factor = 4;
+}
+message Contacts{
+  string phone = 1;
+  string tg = 2;
+  string email = 3;
+  string reserve = 4;
+}
+
+//Все кураторы по роли
+message GetCuratorsByRoleRequest{
+  string role = 1;
+}
+message GetCuratorsByRoleResponse{
+  repeated Curator curators = 1;
+}
+
+//отсортированные кураторы
+message GetSortedCuratorsRequest{
+  string sortBy = 1;
+}
+message GetSortedCuratorsResponse{
+  repeated Curator curators = 1;
+}
+
+//Добавление куратора
+message AddCuratorRequest{
+  string email = 1;
+  string role = 2;
+}
+message AddCuratorResponse{
+  bool result = 1;
+  string error = 2;
+}
+
+//Выдача токена МИРЭА
+message AddMireaTokenRequest{
+  string token = 1;
+  string email = 2;
+}
+message AddMireaTokenResponse{
+  bool result = 1;
+  string error = 2;
+}
+
+//Получение токена МИРЭА
+message GetMireaTokenRequest{
+  string email = 1;
+}
+message GetMireaTokenResponse{
+  bool result = 1;
+  string error = 2;
+  string token = 3;
+}

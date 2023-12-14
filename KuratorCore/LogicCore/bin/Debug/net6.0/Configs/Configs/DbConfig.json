@@ -1,0 +1,24 @@
+﻿[{
+  "ServiceName": "auth",
+  "Server": "95.165.141.134",
+  "User" : "root",
+  "Password" : "r_tIRNMQh-@Fn9A[",
+  "DatabaseName" : "authdb",
+  "ServerVersion" : "8.0"
+},
+  {
+    "ServiceName": "news",
+    "Server": "95.165.141.134",
+    "User" : "root",
+    "Password" : "r_tIRNMQh-@Fn9A[",
+    "DatabaseName" : "newsdb",
+    "ServerVersion" : "8.0"
+  },
+  {
+    "ServiceName": "servers",
+    "Server": "95.165.141.134",
+    "User" : "root",
+    "Password" : "r_tIRNMQh-@Fn9A[",
+    "DatabaseName" : "serv11db",
+    "ServerVersion" : "8.0"
+  }]

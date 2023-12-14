@@ -1,0 +1,23 @@
+{
+  "Version": 1,
+  "Hash": "GjDgoqHFo997R9AmP9FBs9FQRGbAR4W6Wh60QuI5Xbs=",
+  "Source": "MireaCore",
+  "BasePath": "_content/MireaCore",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [
+    {
+      "Identity": "C:\\Users\\MyUser\\RiderProjects\\KuratorCore\\MailSenderius\\MailSenderius.csproj",
+      "Version": 2,
+      "Source": "MailSenderius",
+      "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",
+      "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier",
+      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
+      "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier"
+    }
+  ],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

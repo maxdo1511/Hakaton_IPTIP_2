@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option csharp_namespace = "LogicCore.Services";
+
+package logic;
+
+service Logic{
+    
+}
